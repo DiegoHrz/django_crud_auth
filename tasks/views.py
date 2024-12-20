@@ -7,6 +7,9 @@ from django.contrib.auth import login, logout, authenticate
 
 from django.db import IntegrityError
 
+from .forms import TaskForm
+from .models import Task
+
 # Create your views here.
 def home(request):
     # return HttpResponse('Hello world')
@@ -71,3 +74,25 @@ def sign_in(request):
             return redirect('/tasks/')
 
 
+def create_task(request):
+
+    if request.method == 'GET':
+        return render(request,'create_tasks.html',{
+            'form':TaskForm
+        })
+    else:
+        try:
+            #usa el nuevo modelo TaskForm como base
+            form = TaskForm(request.POST)
+            #para q aun no lo guarde en la db
+            new_task = form.save(commit=False)
+            #necesita estar asociado con el usuario
+            new_task.user = request.user
+            new_task.save()
+            return redirect('tasks')
+
+        except ValueError :
+            return render(request,'create_tasks.html',{
+            'form':TaskForm,
+            'error':'Please provide valid data'
+        })
