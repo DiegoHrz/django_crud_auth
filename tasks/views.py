@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 #libreria para guardar una cookie con la info del usuario logeado
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 
 from django.db import IntegrityError
 
@@ -53,3 +53,21 @@ def tasks(request):
 def sign_out(request):
     logout(request)
     return redirect('home')
+
+def sign_in(request):
+    if request.method == 'GET':
+        return render(request,'signin.html',{
+            'form': AuthenticationForm,
+        })
+    else:
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request,'signin.html',{
+            'form': AuthenticationForm,
+            'error': 'Username doesnt exist'
+        })
+        else:
+            login(request,user)
+            return redirect('/tasks/')
+
+
