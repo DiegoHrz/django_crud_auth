@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 #libreria para guardar una cookie con la info del usuario logeado
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 from django.db import IntegrityError
 
@@ -31,6 +31,7 @@ def signup(request):
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
                 # lo guardamos en la base de datos
                 user.save()
+                # esto crea la cookie para guardar la sesion log in
                 login(request,user)
                 return redirect('tasks')
 
@@ -48,3 +49,7 @@ def signup(request):
     
 def tasks(request):
     return render(request,'tasks.html')
+
+def sign_out(request):
+    logout(request)
+    return redirect('home')
