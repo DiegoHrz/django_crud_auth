@@ -11,4 +11,4 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     #just because we used the default model User from Django
     def __str__(self): 
-        return self.title + ' by' + self.user.username
+        return self.title + ' by ' + self.user.username
