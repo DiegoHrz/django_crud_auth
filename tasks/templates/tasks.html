@@ -1,9 +1,18 @@
 {% extends 'base.html' %} {% block content %}
-<h1>tasks</h1>
+
+<h1>Tasks</h1>
 
 <ul>
   {% for task in tasks %}
-  <li>{{task.title}}</li>
+  <li>
+    {% if task.important %}
+    <strong>{{task.title}}</strong>
+    {% else %} {{task.title}} {% endif %}
+
+    <p>{{task.description}}</p>
+    <p>{{task.user.username}}</p>
+    <p>{{task.important}}</p>
+  </li>
   {% endfor %}
 </ul>
 

@@ -51,10 +51,14 @@ def signup(request):
                 }))
     
 def tasks(request):
-    tasks = Task.objects.all()
+    # para traer a todos
+    # tasks = Task.objects.all() 
+    #para traer solo las del usuario actual
+    tasks = Task.objects.filter(user=request.user,datecompleted__isnull=True)
+    print(request.user)
     return render(request,'tasks.html',{
         'tasks':tasks
-    })
+    }) 
 
 def sign_out(request):
     logout(request)
