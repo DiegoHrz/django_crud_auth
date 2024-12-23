@@ -1,3 +1,10 @@
 {% extends 'base.html' %} {% block content %}
-<h1>{{task.title}}</h1> 
+<h1>{{task.title}}</h1>
+
+    {{error}}
+
+<form method="POST">
+  {% csrf_token %} {{form.as_p}}
+  <button>update</button>
+</form>
 {% endblock %}
