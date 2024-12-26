@@ -13,7 +13,11 @@
         </li>
         {% if user.is_authenticated %}
         <li>
-          <a href="/tasks">Tasks</a>
+          <!-- <a href="/tasks">Tasks Pending</a> de otra forma -->
+          <a href="{% url 'tasks' %}">Tasks Pending</a>
+        </li>
+        <li>
+          <a href="/tasks_completed">Tasks Completed</a>
         </li>
         <li>
           <a href="/tasks/create">Create Task</a>
@@ -26,8 +30,8 @@
           <a href="/signup">Sign up</a>
         </li>
         <li>
-            <a href="/signin">Sign in</a>
-          </li>
+          <a href="/signin">Sign in</a>
+        </li>
 
         {% endif %}
       </ul>
